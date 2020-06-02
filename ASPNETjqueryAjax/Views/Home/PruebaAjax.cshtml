@@ -1,0 +1,94 @@
+﻿<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#botonEj1').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Ejemplo1", "Home")',
+                success: function (dato) {
+                    $('#resultado1').html(dato);
+                }
+            });
+        });
+
+        $('#botonEj2').click(function () {
+            var nom = $('#nombreId').val();
+            $.ajax({
+                type: 'GET',
+                data: { nombreC: nom },
+                url: '@Url.Action("Ejemplo2","Home")',
+                success: function (miDato) {
+                    $('#resultado2').html(miDato);
+                }
+
+            });
+        });
+
+        $('#botonEj3').click(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("Ejemplo3", "Home")',
+                success: function (producto) {
+                    var cadenaBonita = 'ID: ' + producto.Id + '<br/>Nombre: ' + producto.Nombre + '<br/>Precio: ' + producto.Precio;
+                    $('#resultado3').html(cadenaBonita);
+                }
+
+            });
+        });
+
+        $('#botonEj4').click(function () {
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("Ejemplo4", "Home")',
+                success: function (listaProductos) {
+                    var cadenaBonita = '';
+                    for (var i = 0; i < listaProductos.length; i++) {
+                        cadenaBonita += 'ID: ' + listaProductos[i].Id + '<br/>Nombre: ' + listaProductos[i].Nombre + '<br/>Precio: ' + listaProductos[i].Precio + '<br /><br/> <br/>';
+                    }
+                    $('#resultado4').html(cadenaBonita);
+                }
+
+            });
+        });
+    });
+</script>
+
+<!-- ejemplo 01 -->
+<div>
+    <h3>Ejemplo 1</h3>
+    <input type="button" value="Ejemplo 01" id="botonEj1" />
+    <br />
+    <span id="resultado1"></span>
+</div>
+<br />
+<div>
+    <h3>Ejemplo 2 (enviando un texto y recibiendo un texto)</h3>
+    Ingrese su nombre <input type="text" id="nombreId"/>
+    <br />
+    <input type="button" value="Enviar" id="botonEj2"/>
+    <br />
+    <span id="resultado2"></span>
+</div>
+
+<br />
+
+<div>
+    <h3>Ejemplo 3 (recibiendo un objeto)</h3>
+    <input type="button" value="Solicitar obj" id="botonEj3" />
+    <br />
+    <span id="resultado3"></span>
+</div>
+
+
+<br />
+
+<div>
+    <h3>Ejemplo 4 (recibiendo una lista de objetos)</h3>
+    <input type="button" value="Solicitar lista" id="botonEj4" />
+    <br />
+    <div id="resultado4"></div>
+</div>
